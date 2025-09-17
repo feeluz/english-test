@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>English Level Test (External JS)</title>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <style>
+    :root { --bg:#f7f7fb; --card:#fff; --ink:#1e1e2a; --muted:#666; --accent:#2563eb; --ok:#16a34a; }
+    * { box-sizing: border-box; }
+    body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;max-width:950px;margin:auto;padding:24px;color:var(--ink);background:var(--bg);}
+    h1{ text-align:center; margin:0 0 6px;}
+    .sub{ text-align:center; color:var(--muted); margin:0 0 18px; }
+    .section-title{ margin:28px 0 12px; font-size:1.25rem; }
+    .card{ background:var(--card); border:1px solid #e5e7eb; border-radius:12px; padding:16px; margin:14px 0; }
+    .qhead{ font-weight:600; margin:0 0 10px; }
+    .opts label{ display:block; margin:6px 0; cursor:pointer; }
+    .controls{ display:flex; gap:8px; flex-wrap:wrap; align-items:center; margin:12px 0 4px; }
+    .select, .btn{ padding:10px 14px; border-radius:10px; border:1px solid #d1d5db; background:#fff; cursor:pointer; font-size:14px; }
+    .btn.primary{ background:var(--accent); color:#fff; border:none; }
+    .btn.secondary{ background:#fff; }
+    .btn.ghost{ background:transparent; }
+    .footer{ display:flex; gap:10px; justify-content:center; flex-wrap:wrap; margin-top:20px; }
+    #result{ font-size:18px; font-weight:700; text-align:center; margin-top:14px; }
+    .pill{ display:inline-block; padding:4px 10px; border-radius:999px; font-size:12px; color:#fff; background:var(--ok); margin-left:6px; }
+    .muted{ color:var(--muted); font-size:13px; }
+    .inline-note{ font-size:12px; color:var(--muted); margin:6px 0 0; }
+    .hr{ height:1px; background:#e5e7eb; margin:22px 0; border:0;}
+    .topbar{ display:flex; gap:10px; align-items:center; justify-content:center; flex-wrap:wrap; margin:8px 0 16px; }
+    .topbar input[type="text"]{ padding:10px 12px; border-radius:10px; border:1px solid #d1d5db; min-width:240px; }
+    .note { text-align:center; font-size:12px; color:var(--muted); margin-top:6px; }
+    .transcript{ display:none; margin-top:8px; padding:8px; background:#f3f4f6; border-radius:8px; font-size:14px; }
+  </style>
+</head>
+<body>
+  <h1>English Level Test</h1>
+  <p class="sub">Grammar • Vocabulary • Reading • <strong>Listening</strong> (with automatic fallback)</p>
+
+  <div class="topbar">
+    <input id="studentName" type="text" placeholder="Your name (optional)" aria-label="Your name" />
+    <button class="btn ghost" id="printBtn" type="button">🖨️ Print</button>
+    <button class="btn ghost" id="resetBtn" type="button">↺ Reset</button>
+  </div>
+
+  <div class="card" aria-labelledby="listening-settings">
+    <div class="qhead" id="listening-settings">🎧 Listening settings</div>
+    <div class="controls">
+      <select id="voiceSelect" class="select" title="Voice"></select>
+      <label class="muted">Rate <input id="rate" type="range" min="0.7" max="1.2" step="0.05" value="1" /></label>
+      <label class="muted">Volume <input id="volume" type="range" min="0.2" max="1" step="0.05" value="1" /></label>
+      <button type="button" class="btn secondary" id="testVoice">Play sample</button>
+      <span id="ttsStatus" class="muted" role="status" aria-live="polite"></span>
+    </div>
+    <p class="inline-note">If audio won’t play or no voices appear, use the “Show transcript” button on each listening item.</p>
+  </div>
+
+  <h2 class="section-title">Part A — Grammar, Vocabulary & Reading</h2>
+  <div id="quizA" role="group" aria-label="Grammar, Vocabulary and Reading Questions"></div>
+
+  <div class="hr"></div>
+
+  <h2 class="section-title">Part B — Listening</h2>
+  <p class="muted">Click <strong>Play</strong> (or “Show transcript”) for each listening question and choose the correct answer.</p>
+  <div id="quizB" role="group" aria-label="Listening Questions"></div>
+
+  <div class="footer">
+    <button type="button" class="btn primary" id="submitBtn">Submit</button>
+  </div>
+  <div id="result" aria-live="polite"></div>
+  <p class="note">This test runs entirely in your browser. No data is uploaded.</p>
+
+  <script src="test.js"></script>
+</body>
+</html>
